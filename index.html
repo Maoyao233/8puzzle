@@ -1,0 +1,76 @@
+<!--
+ * @Author: Maoyao Ye
+ * @Date: 2020-04-08 17:22:52
+ * @LastEditors: Maoyao Ye
+ * @LastEditTime: 2020-04-21 23:48:34
+ * @FilePath: \Courses\AI\8puzzle\index.html
+ * @Description: 
+ -->
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>八数码</title>
+
+  <link rel="stylesheet" type="text/css" href="css/normalize.css" />
+  <link rel="stylesheet" type="text/css" href="css/demo.css" />
+  <link rel="stylesheet" type="text/css" href="css/component.css" />
+  <link rel="stylesheet" type="text/css" href="css/block.css" />
+  <style>
+    .d2 {
+      position: absolute;
+      left: -20px;
+      top: 400px;
+    }
+  </style>
+  <!--[if IE]>
+<script src="js/html5.js"></script>
+<![endif]-->
+</head>
+
+<body>
+  <div class="container demo-1">
+    <div class="content">
+      <div id="large-header" class="large-header">
+        <canvas id="demo-canvas"></canvas>
+        <div class="block-container" id="box">
+          <div id="r1">1</div>
+          <div id="r2">2</div>
+          <div id="r3">3</div>
+          <div id="r4">4</div>
+          <div id="r5">5</div>
+          <div id="r6">6</div>
+          <div id="r7">7</div>
+          <div id="r8">8</div>
+        </div>
+        <div class="button-container" id="buttons">
+          <button id="random">
+            随机局面
+          </button>
+          <button id="display">
+            自动演示
+          </button>
+          <button id="nextStep">
+            单步演示
+          </button>
+        </div>
+        <div class="solution-container" id="solution">
+        
+        </div>
+      </div>
+    </div>
+  </div><!-- /container -->
+  <script src="js/TweenLite.min.js"></script>
+  <script src="js/EasePack.min.js"></script>
+  <script src="js/rAF.js"></script>
+  <script src="js/heap.js"></script>
+  <script src="js/solver.js"></script>
+  <script src="js/test.js"></script>
+  <script src="js/demo-1.js"></script>
+</body>
+
+</html>
