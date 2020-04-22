@@ -2,7 +2,7 @@
  * @Author: Maoyao Ye
  * @Date: 2020-04-12 10:39:19
  * @LastEditors: Maoyao Ye
- * @LastEditTime: 2020-04-21 23:39:54
+ * @LastEditTime: 2020-04-22 10:58:52
  * @FilePath: \Courses\AI\8puzzle\js\solver.js
  * @Description: 
  */
@@ -80,7 +80,7 @@ function solve(startState, endState, evaluate) {
                     //dis[codeV] = dis[codeU] + 1;
                     vis[codeV] = true;
                     if (codeV == endStateCode) {
-                        return { path: getPath(v) ,searchedNode:stateCnt,unsearchedNode:open.size(),solvable:true};
+                        return { path: getPath(v) ,searchedNode:stateCnt,unsearchedNode:open.size(),curStep:0,solvable:true};
                     }
                     v.f = v.g + this.evaluate(v, endState);
                     open.push(v);
@@ -138,11 +138,6 @@ function getPath(curState) {
     while (curState) {
         path[curState.g] = curState;
         curState = curState.parent;
-    }
-
-    //test
-    for (let i = 0; i < path.length; i++) {
-        console.log(path[i].st);
     }
 
     return path;

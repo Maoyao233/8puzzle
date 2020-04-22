@@ -6,22 +6,33 @@
         st: [1, 8, 3,
             2, 0, 4,
             7, 6, 5]
-    };
-
-    var endState = {
+    }, endState = {
         st: [1, 2, 3,
             4, 5, 6,
             7, 8, 0]
+        };
+    var curState = {
+        st: Array.from(startState.st)
     };
 
-    var evaluate;
+    var evaluaters = [{ func: noneEvaluate, name: "不使用估价函数" },
+        { func: evaluateByHamming, name: "使用汉明距离作为估价函数" },
+    { func: evaluateByManhattan, name: "使用曼哈顿距离作为估价函数" }
+    ];
 
-    var solutionByHamming,solutionByManhaton;
+    var curEvaluaterNumber = 0;
+
+    var displayTimer = null;
+
+    var displayAnimationRunning = false;
+
+    var solution;
 
     // Main
     initHeader();
     initAnimation();
     addListeners();
+    randomizeState();
 
     function initHeader() {
         width = window.innerWidth;
@@ -84,7 +95,41 @@
             points[i].circle = c;
         }
 
-        randomizeState();
+    }
+
+    function printSolution() {
+        if (!solution.solvable) {
+            document.getElementById("solution").innerText = "无解";
+        }
+        else {
+            document.getElementById("solution").innerText = "解步长：" + (solution.path.length - 1) + "\n扩展结点数：" +
+                (solution.searchedNode) + "\n未扩展结点数：" + (solution.unsearchedNode);
+        }
+    }
+
+    function displayStep() {
+        if (!solution.solvable || solution.curStep >= solution.path.length - 1) {
+            return;
+        }
+        curState = solution.path[++solution.curStep];
+        updateBoard();
+    }
+
+    function displaySolution() {
+        if (solution.solvable) {
+            displayStep();
+            displayAnimationRunning = true;
+            displayTimer = setInterval(displayStep, 1000);
+        }
+    }
+
+    function changeEvaluater() {
+        curEvaluaterNumber = (curEvaluaterNumber + 1) % evaluaters.length;
+        solution = solve(startState, endState, evaluaters[curEvaluaterNumber].func);
+        document.getElementById("curEvaluater").innerText = "当前："+evaluaters[curEvaluaterNumber].name;
+        document.getElementById("changeEvaluater").innerText = evaluaters[(curEvaluaterNumber + 1) % evaluaters.length].name;
+        reset();
+        printSolution();
     }
 
     // Event handling
@@ -96,7 +141,16 @@
         window.addEventListener('resize', resize);
         document.getElementById("random").
             addEventListener('click', randomizeState, false);
-        //document.getElementById("display").addEventListener('click',)
+        document.getElementById("display").
+            addEventListener('click', displaySolution, false);
+        document.getElementById("nextStep").
+            addEventListener('click', function () {
+                if (!displayAnimationRunning)
+                    displayStep();
+            }
+                , false);
+        document.getElementById("changeEvaluater").
+            addEventListener('click', changeEvaluater, false);
     }
 
     function mouseMove(e) {
@@ -128,8 +182,8 @@
 
     function updateBoard() {
         for (let i = 0; i < 9; i++) {
-            if (startState.st[i]) {
-                let u = document.getElementById("r" + startState.st[i]);
+            if (curState.st[i]) {
+                let u = document.getElementById("r" + curState.st[i]);
                 u.style.gridRow = ~~(i / 3) + 1;
                 u.style.gridColumn = i % 3 + 1;
                 console.log(u.style.gridRow + " " + u.style.gridColumn)
@@ -138,7 +192,7 @@
     }
 
     function randomizeState() {
-        let vis = new Array(9).fill(false),randomState=new Array(9);
+        let vis = new Array(9).fill(false);
         for (let i = 0; i < 9; i++) {
             let x;
             do {
@@ -146,12 +200,20 @@
             }
             while (vis[x]);
             vis[x] = true;
-            randomState[i] = x;
+            startState.st[i] = x;
         }
-        startState.st = Array.from(randomState);
+        curState.st = Array.from(startState.st);
         updateBoard();
-        solutionByHamming = solve(startState, endState,evaluateByHamming);
-        solutionByManhaton = solve(startState, endState, evaluateByManhattan);
+        solution = solve(startState, endState, evaluaters[curEvaluaterNumber].func);
+        printSolution();
+        if (displayAnimationRunning) {
+            clearInterval(displayTimer);
+            displayAnimationRunning = false;
+        }
+    }
+
+    function noneEvaluate(curState, endState) {
+        return 0;
     }
 
     function evaluateByHamming(curState, endState) {
@@ -212,6 +274,15 @@
             }
         }
         requestAnimationFrame(animate);
+    }
+
+    function reset() {
+        curState.st = Array.from(startState.st);
+        if (displayAnimationRunning) {
+            displayAnimationRunning = false;
+            clearInterval(displayTimer);
+        }
+        updateBoard();
     }
 
     function shiftPoint(p) {

@@ -2,7 +2,7 @@
  * @Author: Maoyao Ye
  * @Date: 2020-04-01 17:26:15
  * @LastEditors: Maoyao Ye
- * @LastEditTime: 2020-04-21 21:02:48
+ * @LastEditTime: 2020-04-22 10:15:58
  * @FilePath: \Courses\AI\8puzzle\js\main.js
  * @Description: 
  */
@@ -13,8 +13,8 @@ const path = require('path')
 function createWindow () {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 1024,
-    height: 768,
+    width: 800,
+    height: 600,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
     }

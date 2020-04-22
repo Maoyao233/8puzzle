@@ -2,7 +2,7 @@
  * @Author: Maoyao Ye
  * @Date: 2020-04-08 17:22:52
  * @LastEditors: Maoyao Ye
- * @LastEditTime: 2020-04-21 23:48:34
+ * @LastEditTime: 2020-04-22 12:26:59
  * @FilePath: \Courses\AI\8puzzle\index.html
  * @Description: 
  -->
@@ -20,13 +20,6 @@
   <link rel="stylesheet" type="text/css" href="css/demo.css" />
   <link rel="stylesheet" type="text/css" href="css/component.css" />
   <link rel="stylesheet" type="text/css" href="css/block.css" />
-  <style>
-    .d2 {
-      position: absolute;
-      left: -20px;
-      top: 400px;
-    }
-  </style>
   <!--[if IE]>
 <script src="js/html5.js"></script>
 <![endif]-->
@@ -59,8 +52,10 @@
           </button>
         </div>
         <div class="solution-container" id="solution">
-        
+          miaomiaomiao
         </div>
+        <div id="curEvaluater"> 当前:不使用估价函数</div>
+        <button id="changeEvaluater">使用汉明距离作为估价函数</button>
       </div>
     </div>
   </div><!-- /container -->
@@ -70,7 +65,7 @@
   <script src="js/heap.js"></script>
   <script src="js/solver.js"></script>
   <script src="js/test.js"></script>
-  <script src="js/demo-1.js"></script>
+  <script src="js/index.js"></script>
 </body>
 
 </html>
