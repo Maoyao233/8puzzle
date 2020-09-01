@@ -1,22 +1,25 @@
 {
-  "name": "electron-quick-start",
+  "name": "8puzzle",
   "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "description": "A Electron application to display solution of 8puzzle problem",
   "main": "./js/main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "builder": "electron-builder build --win --x64"
   },
-  "repository": "https://github.com/electron/electron-quick-start",
+  "repository": "https://github.com/Maoyao233/8puzzle",
   "keywords": [
-    "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "demo"
+    "AI",
+    "Astar",
+    "electron",
+    "8puzzle"
   ],
-  "author": "GitHub",
+  "author": "MaoyaoYe",
   "license": "CC0-1.0",
   "devDependencies": {
-    "electron": "^8.2.1"
+    "electron": "10.1.0"
+  },
+  "build": {
+    "appId": "8puzzle"
   }
 }
